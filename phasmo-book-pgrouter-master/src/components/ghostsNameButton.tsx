@@ -1,29 +1,30 @@
 import { ghosts } from "@/data/ghostsandevidences";
 import React, { useEffect, useState } from "react";
 
-export default function GhostsNameButton() {
-  const [buttonStates, setButtonStates] = useState({});
-  const [evidenceTrueArray, setEvidenceTrueArray] = useState([]);
+export const GhostsNameButton: React.FC = () => {
+  const [buttonStates, setButtonStates] = useState<{
+    [key: string]: boolean | null;
+  }>({});
+  const [evidenceTrueArray, setEvidenceTrueArray] = useState<string[]>([]);
 
   const ghostsNameArray = Object.keys(ghosts);
   const uniqueEvidenceSet = new Set(Object.values(ghosts).flat());
   const uniqueEvidence = Array.from(uniqueEvidenceSet);
 
-  const handleClick = (evidence) => {
+  const handleClick = (evidence: string) => {
     setButtonStates((prevStates) => ({
       ...prevStates,
       [evidence]: toggleState(prevStates[evidence]),
     }));
   };
 
-  const toggleState = (currentState) => {
+  const toggleState = (currentState: boolean | null) => {
     if (currentState === true) return false;
     if (currentState === false) return null;
-    return true; // if currentState is null or undefined, set it to true
+    return true;
   };
 
   useEffect(() => {
-    // Verifica e armazena as evidências com valor true
     const trueEvidences = uniqueEvidence.filter(
       (evidence) => buttonStates[evidence] === true
     );
@@ -31,15 +32,13 @@ export default function GhostsNameButton() {
     if (trueEvidences.length > 0) {
       console.log("Evidências com valor true:", trueEvidences);
 
-      // Pesquisa todos os fantasmas com base na evidência
-      const matchingGhosts = ghostsNameArray.filter((ghost) =>
+      const matchingGhosts: string[] = ghostsNameArray.filter((ghost) =>
         trueEvidences.every((evidence) => ghosts[ghost].includes(evidence))
       );
 
       console.log("Fantasmas correspondentes:", matchingGhosts);
       setEvidenceTrueArray(matchingGhosts);
     } else {
-      // Se não houver evidências verdadeiras, resete o estado para vazio
       setEvidenceTrueArray([]);
     }
   }, [buttonStates]);
@@ -49,26 +48,30 @@ export default function GhostsNameButton() {
 
   return (
     <>
-      <div className="grid grid-cols-2 pt-10 px-40">
+      <div className="grid grid-cols-2 pt-10 px-40 justify-items-center">
         {uniqueEvidence.map((evidence) => (
           <button
             key={evidence}
             className={`${
-              buttonStates[evidence] === true ? "bg-red-400" : ""
+              buttonStates[evidence] === true
+                ? "border-[1px] border-white m-2 rounded-full bg-red-400"
+                : ""
             } ${
-              buttonStates[evidence] === false ? "bg-blue-400" : ""
-            } + border-[1px] border-white m-2 rounded-full`}
+              buttonStates[evidence] === false
+                ? "line-through opacity-80 border-[1px]"
+                : ""
+            } m-2 border-[1pxt rounded-full w-[250px]`}
             onClick={() => handleClick(evidence)}
           >
             {evidence}
           </button>
         ))}
       </div>
-      <div className="grid grid-cols-3 pt-10 px-40">
+      <div className="grid grid-cols-3 pt-10 justify-items-center">
         {ghostsNameArray.map((ghost) => (
           <button
             key={ghost}
-            className={`m-2 ${
+            className={`my-2 w-[250px] ${
               evidenceTrueArray.includes(ghost) ? "bg-red-400" : ""
             }`}
           >
@@ -78,4 +81,4 @@ export default function GhostsNameButton() {
       </div>
     </>
   );
-}
+};

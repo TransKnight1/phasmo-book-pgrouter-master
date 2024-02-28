@@ -1,4 +1,8 @@
-export const ghosts = {
+type ghosts = {
+  [key: string]: string[];
+};
+
+export const ghosts: ghosts = {
   Spirit: ["EMF5", "Spirit Box", "GhostWriting"],
   Wraith: ["EMF5", "D.O.T.S", "Spirit Box"],
   Phantom: ["D.O.T.S", "Spirit Box", "UltraViolet"],

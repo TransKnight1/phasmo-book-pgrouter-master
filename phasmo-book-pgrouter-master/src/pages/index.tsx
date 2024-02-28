@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ghosts } from "@/data/ghostsandevidences";
-import GhostsNameButton from "@/components/ghostsNameButton";
+import { GhostsNameButton } from "@/components/ghostsNameButton";
 
 export default function Home() {
   return (
@@ -8,6 +8,7 @@ export default function Home() {
       <div className="flex text-white font-bold justify-center mt-4">
         Hello fellow ghost hunters!
       </div>
+      <div className="absolute left-1/2 transform -translate-x-1/2 w-[400px] border-t-[1px] mt-2"></div>
       <div>
         <GhostsNameButton />
       </div>
