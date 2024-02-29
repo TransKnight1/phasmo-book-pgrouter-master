@@ -32,12 +32,13 @@ export const GhostsNameButton: React.FC = () => {
     if (trueEvidences.length > 0) {
       console.log("Evidências com valor true:", trueEvidences);
 
-      const matchingGhosts: string[] = ghostsNameArray.filter((ghost) =>
-        trueEvidences.every((evidence) => ghosts[ghost].includes(evidence))
+      const nonMatchingGhosts: string[] = ghostsNameArray.filter(
+        (ghost) =>
+          !trueEvidences.every((evidence) => ghosts[ghost].includes(evidence))
       );
 
-      console.log("Fantasmas correspondentes:", matchingGhosts);
-      setEvidenceTrueArray(matchingGhosts);
+      console.log("Fantasmas não correspondentes:", nonMatchingGhosts);
+      setEvidenceTrueArray(nonMatchingGhosts);
     } else {
       setEvidenceTrueArray([]);
     }
